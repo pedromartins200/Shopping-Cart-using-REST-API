@@ -1,0 +1,14 @@
+RewriteEngine On
+SetEnvIf Host www.mywebsite.com$ CI_ENV=production
+SetEnvIf Host www.mywebsite.com$ CI_ENV=testing
+SetEnvIf Host localhost$ CI_ENV=development
+
+#remover (ocultar) o index.php do url
+RewriteCond $1 !^(index\\.php|resources|robots\\.txt)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 [L,QSA]
+
+RewriteCond %{HTTP:Authorization} ^(.+)$
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+

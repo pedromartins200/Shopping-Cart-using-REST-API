@@ -1,0 +1,106 @@
+body {
+    margin: 0;
+    background: #fff;
+    min-height: 100%;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    font-style: normal;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "pnum";
+    font-variant-numeric: proportional-nums;
+    font-family: 'Josefin Sans', sans-serif;
+    font-display: auto;
+    letter-spacing: 1px;
+    font-size:18px;
+    height: 100%;
+}
+
+.list-group .list-group-item:hover {
+    background-color: darkgrey;
+    cursor:pointer;
+}
+
+.badge:after{
+    content:attr(value);
+    font-size:12px;
+    background: white;
+    color: black;
+    border-radius:75%;
+    font-weight: bold;
+    padding:3px;
+    position:relative;
+    left:-8px;
+    top:-10px;
+    opacity:0.9;
+}
+
+.cart-item-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 25%;
+    border: #E0E0E0 1px solid;
+    padding: 1px;
+    vertical-align: middle;
+    margin-right: 15px;
+}
+
+
+@media only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px) {
+
+
+    /* Hide table headers (but not display: none;, for accessibility) */
+    #table_shopping_cart thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    #table_shopping_cart tr {
+        border: 1px solid #ccc;
+        margin-bottom: 1em;
+    }
+
+    #table_shopping_cart td {
+        /* Behave  like a "row" */
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        display: block;
+    }
+
+    #table_shopping_cart td:before {
+        /* Top/left values mimic padding */
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        color: #17a2b8 !important;
+        font-weight: bold;
+    }
+
+    #table_shopping_cart td:nth-of-type(1):before {
+        content: "Name";
+    }
+
+    #table_shopping_cart td:nth-of-type(2):before {
+        content: "Category";
+    }
+
+    #table_shopping_cart td:nth-of-type(3):before {
+        content: "Quantity";
+    }
+
+    #table_shopping_cart td:nth-of-type(4):before {
+        content: "Price";
+    }
+
+    .table_shopping_cart td:nth-of-type(5):before {
+        content: "Remove";
+    }
+
+}
