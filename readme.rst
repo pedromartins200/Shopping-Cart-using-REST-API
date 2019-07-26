@@ -8,7 +8,7 @@ The system allows to add items to the cart, update the quantities, order the car
 
 In the future, a stock management system could be done and token base authentication for the API, but it seemed overkill to me.
 
-I used codeigniter 3, guzzle for the API requests, and phil sturgeon's rest server.
+I used codeigniter 3, guzzle for the API requests, and phil sturgeon's rest server. I used php 7.3.7 but 7.0+ may work.
 
 
 Keep in mind the base_url (check application/config/config.php) and also the database configurations (application/config/development/database.php). Base url is what gives trouble when people import codeigniter projects.
