@@ -61,38 +61,4 @@ class Home extends MY_Controller
 
         $this->render('home');
     }
-
-    public function addItemCart()
-    {
-        $client = new GuzzleHttp\Client();
-        $post = $this->input->post(null, true);
-
-        $product_id = $post['product_id'];
-
-        $quantity = $post['quantity'];
-
-        $this->form_validation->set_rules('quantity', 'Quantity field', 'numeric');
-
-        if($this->form_validation->run() == false) {
-            $this->session->set_userdata('cart_item', 'Quantity of the product must be numeric');
-            redirect('/home');
-        } else {
-            try {
-                $cart = $client->request('POST', 'http://localhost/challenge/api/Cart/', [
-                    'auth' => ['admin', '1234'],
-                    'form_params' => [
-                        'product_id' => $product_id,
-                        'quantity' => $quantity
-                    ]
-                ]);
-            }  catch (GuzzleHttp\Exception\ClientException $e) {
-                echo $e->getMessage();
-            }
-
-
-            $this->session->set_userdata('cart_item', $quantity.' item/s added to cart');
-            redirect('/home');
-        }
-
-    }
 }
