@@ -11,7 +11,7 @@ In the future, a stock management system could be done and token base authentica
 I used codeigniter 3, guzzle for the API requests, and phil sturgeon's rest server.
 
 
-Keep in mind the base_url (check application/config/config.php) and also the database configurations (application/config/database.php)
+Keep in mind the base_url (check application/config/config.php) and also the database configurations (application/config/development/database.php). Base url is what gives trouble when people import codeigniter projects.
 
 ###################
 API Usage
