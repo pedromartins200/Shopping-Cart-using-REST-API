@@ -1,4 +1,19 @@
 ###################
+My implementation
+###################
+
+A simple client application using a REST API for the backend.
+
+The system allows to add items to the cart, update the quantities, order the cart content, view cart items, add a voucher (discount) to the order. Also items are displayed according to their category.
+
+In the future, a stock management system could be done.
+
+I used codeigniter 3, guzzle for the API requests, and phil sturgeon's rest server.
+
+
+Keep in mind the base_url (check application/config/config.php) and also the database configurations (application/config/database.php)
+
+###################
 What is CodeIgniter
 ###################
 
