@@ -10,7 +10,7 @@ class Orders_model extends CI_Model
     }
 
     public function show_my_orders($customer_id) {
-        $sql = "SELECT * FROM orders WHERE customer_id = ?;";
+        $sql = "SELECT * FROM orders WHERE orders.customer_id IN (SELECT id FROM customer_fiscal WHERE customer_id = ?);";
         $query = $this->db->query($sql, array($customer_id));
         return $query->result_array();
     }

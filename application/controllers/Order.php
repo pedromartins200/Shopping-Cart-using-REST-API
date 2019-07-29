@@ -16,7 +16,7 @@ class Order extends MY_Controller
     public function index()
     {
         $post = $this->input->post(null,true);
-        //$this->tools->_debug($post);exit;
+
 
         $session_data = $this->session->userdata('logged_in');
 
@@ -28,7 +28,45 @@ class Order extends MY_Controller
         if(!empty($post))
         {
             $client = new GuzzleHttp\Client();
+            //$this->tools->_debug($post);exit;
             //$this->tools->_debug($session_data);exit;
+
+
+            //se o post for para criar fiscal info
+            if(isset($post['nif_fiscal_info'])) {
+                $this->form_validation->set_rules('name_fiscal_info', 'Name of fiscal invoice', 'required');
+                $this->form_validation->set_rules('nif_fiscal_info', 'Nif of fiscal invoice', 'required');
+                $this->form_validation->set_rules('city_fiscal_info', 'City of fiscal invoice', 'required');
+                $this->form_validation->set_rules('address_fiscal_info', 'Address of fiscal invoice', 'required');
+                $this->form_validation->set_rules('zipcode_fiscal_info', 'zipcode_fiscal_info', 'required');
+                $this->form_validation->set_rules('customer_id', 'Id of customer', 'required');
+
+                if($this->form_validation->run() == FALSE)
+                {
+                    $this->render('order');
+                } else {
+                    $client = new GuzzleHttp\Client();
+
+                    try {
+                        $fiscal_invoice = $client->request('POST', 'http://localhost/challenge/api/Fiscal/', [
+                            'auth' => ['admin', '1234'],
+                            'form_params' => [
+                                'nif_fiscal_info' => $post['nif_fiscal_info'],
+                                'name_fiscal_info' => $post['name_fiscal_info'],
+                                'address_fiscal_info' => $post['address_fiscal_info'],
+                                'city_fiscal_info' => $post['city_fiscal_info'],
+                                'zipcode_fiscal_info' => $post['zipcode_fiscal_info'],
+                                'country_fiscal_info' => $post['country_fiscal_info'],
+                                'customer_id' => $post['customer_id'],
+                                'user_id' => $session_data['id'],
+                                'api_key' => $session_data['api_key']
+                            ]
+                        ]);
+                    } catch (GuzzleHttp\Exception\ClientException $e) {
+                        echo $e->getMessage();
+                    }
+                }
+            }
 
 
             try {
@@ -70,6 +108,9 @@ class Order extends MY_Controller
             $this->data['fiscal_info'] = json_decode($fiscal_info->getBody()->getContents(), true);
 
             $this->data['customer_id'] = $session_data['id'];
+
+            //Because this variable could get lost when creating new fiscal info
+            $this->data['voucher'] = $post['voucher'];
 
             $this->render('order');
         }
@@ -140,6 +181,7 @@ class Order extends MY_Controller
     {
         $post = $this->input->post(null,true);
 
+
         $session_data = $this->session->userdata('logged_in');
 
 
@@ -162,11 +204,11 @@ class Order extends MY_Controller
                     $fiscal_invoice = $client->request('POST', 'http://localhost/challenge/api/Fiscal/', [
                         'auth' => ['admin', '1234'],
                         'form_params' => [
-                            'nif' => $post['nif_fiscal_info'],
-                            'customer_name' => $post['name_fiscal_info'],
-                            'address' => $post['address_fiscal_info'],
-                            'city' => $post['city_fiscal_info'],
-                            'zip_code' => $post['zipcode_fiscal_info'],
+                            'nif_fiscal_info' => $post['nif_fiscal_info'],
+                            'name_fiscal_info' => $post['name_fiscal_info'],
+                            'address_fiscal_info' => $post['address_fiscal_info'],
+                            'city_fiscal_info' => $post['city_fiscal_info'],
+                            'zipcode_fiscal_info' => $post['zipcode_fiscal_info'],
                             'customer_id' => $post['customer_id'],
                             'user_id' => $session_data['id'],
                             'api_key' => $session_data['api_key']
@@ -175,13 +217,11 @@ class Order extends MY_Controller
                 } catch (GuzzleHttp\Exception\ClientException $e) {
                     echo $e->getMessage();
                 }
-
                 redirect($_SERVER['HTTP_REFERER']);
             }
 
 
         }
-
         redirect('/home');
     }
 }

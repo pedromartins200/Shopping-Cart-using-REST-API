@@ -110,11 +110,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 </div>
-
-
 <?php echo form_close(); ?>
 
-<?php echo form_open(site_url('Order/create_fiscal_info/'),
+<?php echo form_open(site_url('Order/'),
     array('id' => 'form_fiscal_info', 'method' => 'post')); ?>
 
 <!-- The Modal -->
@@ -191,5 +189,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </div>
 </div>
+
+<input type="hidden" name="voucher" value="<?php echo $voucher;?>">
 
 <?php echo form_close(); ?>

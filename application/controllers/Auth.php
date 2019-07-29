@@ -105,7 +105,7 @@ class Auth extends MY_Controller
 
                     redirect('/home');
                 } else {
-                    $this->response($post, \Restserver\Libraries\REST_Controller::HTTP_BAD_REQUEST);
+                    //$this->response($post, \Restserver\Libraries\REST_Controller::HTTP_BAD_REQUEST);
                     $this->render('login');
                 }
 
@@ -129,12 +129,13 @@ class Auth extends MY_Controller
 
         if(!$user_cart) {
 
-            if(isset($_SESSION['cart'])) {
-                $cart = array(
-                    'user_id' => $user[0]['id']
-                );
+            $cart = array(
+                'user_id' => $user[0]['id']
+            );
 
-                $this->db->insert('cart', $cart);
+            $this->db->insert('cart', $cart);
+
+            if(isset($_SESSION['cart'])) {
 
                 $id_cart_inserted = $this->db->insert_id();
 
