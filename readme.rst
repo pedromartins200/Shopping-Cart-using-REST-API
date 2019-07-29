@@ -43,11 +43,13 @@ There maybe plenty of bugs. This was purely done for demonstration purposes.
 *   API Controllers
 
     ``api/Authentication``
+
     1. POST - create customer
         (name/email and password)
         Returns: return api key and user id
 
     ``api/Cart``
+
     1. GET - get current content of the cart
         (user_id, api_key, voucher_key (optional)
         When a voucher key is supplied and if the key is valid, it will return the cart and the updated price of the cart content.
@@ -64,9 +66,11 @@ There maybe plenty of bugs. This was purely done for demonstration purposes.
 
 
     ``api/Categories``
+
     1. GET - get all categories of products
 
     ``api/Fiscal``
+
     1. GET - get all fiscal invoices associated with this customer id.
         (user_id, api_key)
 
@@ -76,10 +80,12 @@ There maybe plenty of bugs. This was purely done for demonstration purposes.
         Returns: id of the created fiscal invoice
 
       ``api/Misc``
+
     1. GET - Obtain miscellaenous info on the api. Use 'countries' to obtain all country codes.
 
 
      ``api/Order``
+
     1. POST - Create an order with the current cart content for this user.
        If voucher key is supplied and is a valid key, price will have discount.
         (user_id, api_key, voucher_key (optional)  )
@@ -88,6 +94,7 @@ There maybe plenty of bugs. This was purely done for demonstration purposes.
     2. GET - Get all orders of this user. If a order id is supply obtain the order items.
 
     ``api/Products``
+
     1. GET - Obtain all products currently available in the API. If an id is supply, only show products with this category ID.
 
 
