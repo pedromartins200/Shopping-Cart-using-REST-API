@@ -30,6 +30,12 @@ You can use POSTMAN to check the API.
 API Documentation
 ###################
 
-
-Mark *italic text* with one asterisk, **bold text** with two.
 For ``monospaced text``, use two "backquotes" instead.
+
+*   Mark bulleted lists with one of three symbols followed by a space:
+
+    1. asterisk (``*``)
+    2. hyphen (``-``)
+    3. plus sign (``+``)
+
+
