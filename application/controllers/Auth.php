@@ -38,13 +38,12 @@ class Auth extends MY_Controller
                     $client = new GuzzleHttp\Client();
                     //realizar registo na API
                     try {
-                        $user = $client->request('POST', 'http://localhost/challenge/api/Register', [
+                        $user = $client->request('POST', 'http://localhost/challenge/api/Authentication', [
                             'auth' => ['admin', '1234'],
                             'form_params' => [
                                 'name' => $post['name'],
                                 'email' => $post['email'],
-                                'password' => $post['password'],
-                                'bolachas' => '123'
+                                'password' => $post['password']
                             ]
                         ]);
                     } catch (GuzzleHttp\Exception\ClientException $e) {
@@ -68,6 +67,7 @@ class Auth extends MY_Controller
     public function login()
     {
         $post = $this->input->post(null, true);
+
 
         if (empty($post)) {
             $session_data = $this->session->userdata('logged_in');
@@ -129,25 +129,28 @@ class Auth extends MY_Controller
 
         if(!$user_cart) {
 
-            $cart = array(
-                'user_id' => $user[0]['id']
-            );
-
-            $this->db->insert('cart', $cart);
-
-            $id_cart_inserted = $this->db->insert_id();
-
-
-            foreach ($_SESSION['cart'] as $item) {
-                $cart_items = array(
-                    'cart_id' => $id_cart_inserted,
-                    'user_id' => $user[0]['id'],
-                    'product_id' => $item['id'],
-                    'quantity' => $item['quantity'],
-                    'price_per_product' => $item['price']
+            if(isset($_SESSION['cart'])) {
+                $cart = array(
+                    'user_id' => $user[0]['id']
                 );
-                $this->db->insert('cart_items', $cart_items);
+
+                $this->db->insert('cart', $cart);
+
+                $id_cart_inserted = $this->db->insert_id();
+
+
+                foreach ($_SESSION['cart'] as $item) {
+                    $cart_items = array(
+                        'cart_id' => $id_cart_inserted,
+                        'user_id' => $user[0]['id'],
+                        'product_id' => $item['id'],
+                        'quantity' => $item['quantity'],
+                        'price_per_product' => $item['price']
+                    );
+                    $this->db->insert('cart_items', $cart_items);
+                }
             }
+
         }
     }
 
