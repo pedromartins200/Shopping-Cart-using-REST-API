@@ -216,6 +216,7 @@ class tools
     }
 
 
+
     /**
      * Determina se um NIF portugues é valido tendo em conta as regras.
      * Adicionado o digito 3 (nova lei de 2019)

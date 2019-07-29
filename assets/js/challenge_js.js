@@ -96,8 +96,55 @@ function showOrderItems(user_id, api_key, order_id, base_url) {
 
 }
 
+function createNewBillingAddress() {
+    var valid = true;
 
-function hideOrderItems()
-{
+    var client_id = document.getElementById('client_id_hidden');
+    var name = document.getElementById('name_fiscal_info');
+    var nif_vat = document.getElementById('nif_fiscal_info');
+    //var country = document.getElementById('country_fiscal_info');
+    var city = document.getElementById('city_fiscal_info');
+    var address = document.getElementById('address_fiscal_info');
+    var zip_code = document.getElementById('zipcode_fiscal_info');
 
+    if (name.value == '') {
+        $('#name_fiscal_info').css('border', '5px solid red');
+        valid = false;
+    }
+
+    if (nif_vat.value == '' || isNaN(nif_vat.value)) {
+        $('#nif_fiscal_info').css('border', '5px solid red');
+        valid = false;
+    }
+
+    if (city.value == '') {
+        $('#city_fiscal_info').css('border', '5px solid red');
+        valid = false;
+    }
+
+    if (address.value == '') {
+        $('#address_fiscal_info').css('border', '5px solid red');
+        valid = false;
+    }
+
+    if (zip_code.value == '') {
+        $('#zipcode_fiscal_info').css('border', '5px solid red');
+        valid = false;
+    }
+
+    if (valid) {
+        $('#modal_fiscal_info').modal('hide');
+        $('#form_fiscal_info').submit();
+    }
+}
+
+//Muda a border para verde se o elemento nao estiver vazio
+function changeBorder(arg) {
+    var id = arg.getAttribute('id');
+    var element = document.getElementById(id);
+    if (element.value == "") {
+        element.style.border = '5px solid red';
+    } else {
+        element.style.border = '';
+    }
 }

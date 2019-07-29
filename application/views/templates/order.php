@@ -55,16 +55,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <br>
 
-    <label for="shipping">Shipping address: </label>
-    <input type="text" name="shipping_address" required value="" id="shipping">
-
     <h3>We need some billing and shipping address info</h3>
 
-    <button type="button" onclick="addFiscalInfo()">+ Add another one</button>
+    <button type="button" onclick="addFiscalInfo()">+ Create new fiscal invoice</button>
 
     <br>
 
-    <?php if (is_countable($fiscal_info) > 0) : ?>
+    <?php if (!empty($fiscal_info)) : ?>
         <div class="row container">
             <?php $first = 0; ?>
             <?php foreach ($fiscal_info as $data): ?>
@@ -77,7 +74,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <input checked type="radio" name="customer_fiscal_id"
                                            value="<?= $data['id']; ?>">
                                 <?php else: ?>
-                                    <input type="radio" name="nif_options" value="<?= $data['id']; ?>">
+                                    <input type="radio" name="customer_fiscal_id" value="<?= $data['id']; ?>">
                                 <?php endif; ?>
                                 <span class="checkmark"></span>
                             </label>
@@ -100,6 +97,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <?php $first = $first + 1; ?>
             <?php endforeach; ?>
         </div>
+
+    <br>
+
+        <label for="shipping">Shipping address: </label>
+        <input type="text" name="shipping_address" required value="" id="shipping">
+
+    <br>
+
         <button type="submit" class="btn btn-primary">Checkout order</button>
     <?php endif; ?>
 
@@ -128,7 +133,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="form-group">
                     <label for="exampleName">Name:</label>
                     <h6 class="text-danger"><?php echo form_error('name_fiscal_info'); ?></h6>
-                    <input type="text" name="name_fiscal_info" id="name_fiscal_info"
+                    <input type="text" onkeyup="changeBorder(this);" name="name_fiscal_info" id="name_fiscal_info"
                            class="form-control required" placeholder="Name">
                     <small id="nameHelp" class="form-text text-muted">Name associated to this billing address
                     </small>
@@ -136,7 +141,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="form-group">
                     <label for="exampleNif">NIF</label>
                     <h6 class="text-danger"><?php echo form_error('nif_fiscal_info'); ?></h6>
-                    <input type="text" class="form-control required"
+                    <input type="text" onkeyup="changeBorder(this);" class="form-control required"
                            name="nif_fiscal_info" id="nif_fiscal_info" placeholder="Your vat">
                     <small id="nameHelp" class="form-text text-muted">This nif must be valid in Portugal
                 </div>
@@ -145,7 +150,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <h6 class="text-danger"><?php echo form_error('country_fiscal_info'); ?></h6>
                     <select name="country_fiscal_info"
                             class="form-control select_country">
-                        <?php foreach ($info['countries'] as $country) : ?>
+                        <?php foreach ($countries as $country) : ?>
                             <?php if ($country['id'] == 178) : ?>
                                 <option value="<?= $country['id']; ?>"
                                         selected><?= $country['country_name']; ?></option>

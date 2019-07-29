@@ -47,6 +47,10 @@ class Order extends MY_Controller
                     'auth' => ['admin', '1234']
                 ]);
 
+                $countries = $client->request('GET', 'http://localhost/challenge/api/Misc/'.'countries', [
+                    'auth' => ['admin', '1234']
+                ]);
+
 
             }  catch (GuzzleHttp\Exception\ServerException $e) {
                 echo $e->getMessage();
@@ -55,6 +59,8 @@ class Order extends MY_Controller
             $result = json_decode($session_cart->getBody()->getContents(), true);
 
             $this->data['cart'] = $result['cart'];
+
+            $this->data['countries'] = json_decode($countries->getBody()->getContents(), true);
 
             if(!empty($post['voucher']) && $result['voucher_exists'] == "1") {
                 $this->data['discount_price'] = $result['discount_price'];
@@ -134,9 +140,49 @@ class Order extends MY_Controller
     {
         $post = $this->input->post(null,true);
 
-        if(empty($post)) {
+        $session_data = $this->session->userdata('logged_in');
+
+
+        if(!empty($post)) {
+
+            $this->form_validation->set_rules('name_fiscal_info', 'Name of fiscal invoice', 'required');
+            $this->form_validation->set_rules('nif_fiscal_info', 'Nif of fiscal invoice', 'required');
+            $this->form_validation->set_rules('city_fiscal_info', 'City of fiscal invoice', 'required');
+            $this->form_validation->set_rules('address_fiscal_info', 'Address of fiscal invoice', 'required');
+            $this->form_validation->set_rules('zipcode_fiscal_info', 'zipcode_fiscal_info', 'required');
+            $this->form_validation->set_rules('customer_id', 'Id of customer', 'required');
+
+            if($this->form_validation->run() == FALSE)
+            {
+                redirect($_SERVER['HTTP_REFERER']);
+            } else {
+                $client = new GuzzleHttp\Client();
+
+                try {
+                    $fiscal_invoice = $client->request('POST', 'http://localhost/challenge/api/Fiscal/', [
+                        'auth' => ['admin', '1234'],
+                        'form_params' => [
+                            'nif' => $post['nif_fiscal_info'],
+                            'customer_name' => $post['name_fiscal_info'],
+                            'address' => $post['address_fiscal_info'],
+                            'city' => $post['city_fiscal_info'],
+                            'zip_code' => $post['zipcode_fiscal_info'],
+                            'customer_id' => $post['customer_id'],
+                            'user_id' => $session_data['id'],
+                            'api_key' => $session_data['api_key']
+                        ]
+                    ]);
+                } catch (GuzzleHttp\Exception\ClientException $e) {
+                    echo $e->getMessage();
+                }
+
+                redirect($_SERVER['HTTP_REFERER']);
+            }
+
 
         }
+
+        redirect('/home');
     }
 }
 

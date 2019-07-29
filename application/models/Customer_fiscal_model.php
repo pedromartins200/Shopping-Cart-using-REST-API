@@ -10,35 +10,30 @@ class Customer_fiscal_model extends CI_Model
 
     public function getFiscalInfo($customer_id)
     {
-        $sql = "SELECT * FROM customer_fiscal WHERE id = ?;";
+        $sql = "SELECT * FROM customer_fiscal WHERE customer_id = ?;";
         $query = $this->db->query($sql, array($customer_id));
         return $query->result_array();
     }
 
-    /**
-     * Guarda ou actualiza um registo
-     *
-     * @param $data
-     * @return bool
-     */
-    public function save($data) {
 
-        // Verifica se está a criar ou a actualizar
-        if(empty($data['id'])) {
-            // Preenche os defaults
-            $defaults = [];
-            $data = array_merge($defaults, $data);
 
-            //unset($data['id']);
-            // novo registo
-            return ($this->db->insert($this->tableName, $data))? $id = $this->db->insert_id(): false;
-        } else {
-            // actualiza registo
-            $id = $data['id'];
-            unset($data['id']);
-            return ($this->db->update($this->tableName, $data, ['id' => $id]))? $id:false;
-        }
+    public function insertCustomerFiscal($data)
+    {
+        $created = date('Y-m-d H:i:s');
 
-        return false;
+        $customer_fiscal = array(
+            'nif' => $data['nif_fiscal_info'],
+            'address' => $data['address_fiscal_info'],
+            'customer_name' => $data['name_fiscal_info'],
+            'city' => $data['city_fiscal_info'],
+            'country' => $data['country_fiscal_info'],
+            'zip_code' => $data['zipcode_fiscal_info'],
+            'customer_id' => $data['customer_id'],
+            'created_at' => $created
+        );
+
+        $this->db->insert('customer_fiscal',$customer_fiscal);
+
+        return $this->db->insert_id();
     }
 }
