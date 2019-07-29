@@ -55,6 +55,7 @@ There maybe plenty of bugs. This was purely done for demonstration purposes.
         When a voucher key is supplied and if the key is valid, it will return the cart and the updated price of the cart content.
 
     2. POST - add an item to the cart (user_id, api_key, product_id)
+        Return: message with added items
 
     3. DELETE - Remove a product from the cart or delete the whole cart if no product id is supplied.
         (user_id, api_key, product_id)
@@ -99,4 +100,5 @@ There maybe plenty of bugs. This was purely done for demonstration purposes.
 
 
 Currently there are only two categories with products because I was lazy, but you can add some if you want.
+Use 'cookies' or 'burguers' as voucher keys. 10% and 20% discount respectively.
 
