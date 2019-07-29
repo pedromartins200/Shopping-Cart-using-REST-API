@@ -82,9 +82,9 @@ class Cart extends \Restserver\Libraries\REST_Controller
             $cart_id = $this->cart_model->getUserCart($post['user_id'])[0]['cart_id'];
 
             //inserir item no carrinho
-            $ok = $this->cart_model->insertItem($cart_id, $post['user_id'], $post['product_id'],$post['quantity']);
+            $cart_item = $this->cart_model->insertItem($cart_id, $post['user_id'], $post['product_id'],$post['quantity']);
 
-            $this->response($post['quantity'].' Items com id = '.$post['product_id']. ' foram inseridos no carrinho', \Restserver\Libraries\REST_Controller::HTTP_CREATED);
+            $this->response($post['quantity'].' Items with id = '.$post['product_id']. ' were added to the cart', \Restserver\Libraries\REST_Controller::HTTP_CREATED);
         } else {
             $this->response('Unauthorized request',\Restserver\Libraries\REST_Controller::HTTP_UNAUTHORIZED);
         }
@@ -103,13 +103,13 @@ class Cart extends \Restserver\Libraries\REST_Controller
 
         //valid key
         if($user) {
-            //apagar o carrinho todo
+            //delete the whole cart
             if(empty($product_id))
             {
                 $this->cart_model->deleteCart($user_id);
                 $this->response('Shopping cart items removed', \Restserver\Libraries\REST_Controller::HTTP_OK);
             } else {
-                //apagar apenas este item do carrinho
+                //delete only this item
                 $this->cart_model->deleteCartItem($user_id, $product_id);
                 $this->response('Item with id = '.$product_id.' removed from cart', \Restserver\Libraries\REST_Controller::HTTP_OK);
             }
