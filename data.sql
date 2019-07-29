@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 29-Jul-2019 às 21:04
+-- Tempo de geração: 29-Jul-2019 às 23:02
 -- Versão do servidor: 10.3.16-MariaDB
 -- versão do PHP: 7.3.7
 
@@ -39,7 +39,7 @@ CREATE TABLE `cart` (
 
 INSERT INTO `cart` (`cart_id`, `user_id`) VALUES
 (1, 1),
-(9, 44);
+(12, 57);
 
 -- --------------------------------------------------------
 
@@ -60,9 +60,10 @@ CREATE TABLE `cart_items` (
 --
 
 INSERT INTO `cart_items` (`id`, `cart_id`, `user_id`, `product_id`, `quantity`) VALUES
-(357, 9, 44, 3, 1),
-(369, 1, 1, 6, 5),
-(370, 1, 1, 7, 1);
+(377, 1, 1, 3, 1),
+(378, 1, 1, 6, 7),
+(379, 1, 1, 2, 1),
+(380, 12, 57, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -382,8 +383,7 @@ CREATE TABLE `customers` (
 
 INSERT INTO `customers` (`id`, `name`, `email`, `created_at`, `updated_at`, `password_digest`, `remember_digest`, `admin`, `activation_digest`, `activated`, `activated_at`, `api_key`, `reset_digest`, `reset_sent_at`) VALUES
 (1, 'joni', 'soprajogos311@gmail.com', '2018-11-21 23:00:42', '2018-11-21 23:00:42', 'd3ce9efea6244baa7bf718f12dd0c331', 'c979592a76ce88968083623f22ac38f7', NULL, NULL, NULL, NULL, 'ADkNjnBBKLi', NULL, NULL),
-(44, 'odkjas', 'dasdc@gmail.com', '2019-07-23 20:25:37', '2019-07-23 20:25:37', 'd3ce9efea6244baa7bf718f12dd0c331', NULL, NULL, NULL, NULL, NULL, 'NrSNq54w0W', NULL, NULL),
-(51, 'pedrocas', 'chourico@gmail.com', '2019-07-26 01:18:27', '2019-07-26 01:18:27', 'd3ce9efea6244baa7bf718f12dd0c331', NULL, NULL, NULL, NULL, NULL, 'VWcpqbeAYt', NULL, NULL);
+(57, 'rodrigo', 'rodrigo@gmail.com', '2019-07-29 22:49:23', '2019-07-29 22:49:23', 'd3ce9efea6244baa7bf718f12dd0c331', NULL, NULL, NULL, NULL, NULL, 'tZo0oqhbzs', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -408,7 +408,10 @@ CREATE TABLE `customer_fiscal` (
 --
 
 INSERT INTO `customer_fiscal` (`id`, `nif`, `customer_name`, `address`, `city`, `zip_code`, `customer_id`, `created_at`, `country`) VALUES
-(1, 224726340, 'joni', 'Quinta da alegria', 'Far away town', '8200-222', 1, '2019-07-29 00:00:00', 178);
+(1, 224726340, 'joni', 'Quinta da alegria', 'Far away town', '8200-222', 1, '2019-07-29 00:00:00', 178),
+(19, 226330567, 'asda', 'asdk', 'coo', 'asd', 1, '2019-07-29 22:45:58', 178),
+(20, 226330567, 'asd', 'a', 'ada', 'a', 1, '2019-07-29 22:48:58', 178),
+(21, 226330567, 'sad', 'asd', 'asd', 'asd', 57, '2019-07-29 22:49:40', 178);
 
 -- --------------------------------------------------------
 
@@ -432,9 +435,11 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `customer_id`, `created_at`, `status`, `total`, `voucher`, `shipping_address`, `voucher_discount`) VALUES
-(1, 1, '2019-07-29 18:47:39', 1, 87, 2, 'boliqueime', NULL),
-(2, 1, '2019-07-29 19:02:39', 1, 230, 1, 'f', NULL),
-(3, 1, '2019-07-29 19:06:56', 1, 205, 2, 'f', 20);
+(15, 21, '2019-07-29 22:49:43', 1, 15, 2, 'd', 20),
+(16, 1, '2019-07-29 22:50:48', 1, 199, 0, 'asd', 0),
+(17, 21, '2019-07-29 22:51:04', 1, 19, 0, 'asd', 0),
+(19, 21, '2019-07-29 22:52:37', 1, 17, 1, 'boliqueime', 10),
+(20, 20, '2019-07-29 22:59:46', 1, 499, 1, 'p', 10);
 
 -- --------------------------------------------------------
 
@@ -454,13 +459,15 @@ CREATE TABLE `order_items` (
 --
 
 INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `quantity`) VALUES
-(1, 1, 2, 1),
-(2, 1, 3, 3),
-(3, 1, 5, 1),
-(4, 2, 6, 3),
-(5, 2, 7, 1),
-(6, 3, 6, 3),
-(7, 3, 7, 1);
+(25, 15, 3, 1),
+(26, 16, 2, 1),
+(27, 16, 3, 1),
+(28, 16, 6, 2),
+(29, 17, 3, 1),
+(30, 19, 3, 1),
+(31, 20, 2, 1),
+(32, 20, 3, 1),
+(33, 20, 6, 7);
 
 -- --------------------------------------------------------
 
@@ -589,13 +596,13 @@ ALTER TABLE `vouchers`
 -- AUTO_INCREMENT de tabela `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de tabela `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=371;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=381;
 
 --
 -- AUTO_INCREMENT de tabela `categories`
@@ -613,25 +620,25 @@ ALTER TABLE `countries`
 -- AUTO_INCREMENT de tabela `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT de tabela `customer_fiscal`
 --
 ALTER TABLE `customer_fiscal`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de tabela `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de tabela `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT de tabela `products`
@@ -653,7 +660,7 @@ ALTER TABLE `vouchers`
 -- Limitadores para a tabela `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`);
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer_fiscal` (`id`);
 
 --
 -- Limitadores para a tabela `order_items`
