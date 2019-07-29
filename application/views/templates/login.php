@@ -1,3 +1,8 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+?>
+
+
 <div class="container">
 
     <?php echo form_open('Auth/login/', array('method' => 'POST', 'id' => 'form_login_user')); ?>

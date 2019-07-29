@@ -15,23 +15,44 @@ class Cart extends \Restserver\Libraries\REST_Controller
      * Obter o shopping cart atual deste user
      * @param $user_id - id do user
      * @param $api_key - key api que obtem no registo
+     * @param $voucher_key (optional) - get current cart and the total price with discount
      */
-    public function index_get($user_id, $api_key)
+    public function index_get($user_id, $api_key, $voucher_key = FALSE)
     {
         $this->load->model('cart_model');
+        $this->load->model('vouchers_model');
+
 
         $user_cart = $this->cart_model->getCart($user_id);
         if(!empty($user_cart)) {
 
             if($api_key == $user_cart[0]['api_key'])
             {
-                $this->response($user_cart,\Restserver\Libraries\REST_Controller::HTTP_OK);
+                $voucher_exists = $this->vouchers_model->getVoucher($voucher_key);
+
+                $cart_items_total = $this->cart_model->getCartTotalPrice($user_id);
+
+                $total_price = $cart_items_total[0]['total'];
+
+                if($voucher_exists && !$voucher_key == FALSE)
+                {
+                    $voucher = $this->vouchers_model->getVoucher($voucher_key);
+
+                    $total_price = round($total_price - ($total_price * ($voucher[0]['discount_percentage'] / 100)),0);
+
+                    $this->response(array('voucher_exists' => '1','voucher_id' => $voucher[0]['id'],'discount_price' => $total_price,'cart'=>$user_cart),\Restserver\Libraries\REST_Controller::HTTP_OK);
+
+                } else {
+                    //acept request but voucher code was wrong
+                    $this->response(array('voucher_exists' => '0','cart' => $user_cart),\Restserver\Libraries\REST_Controller::HTTP_ACCEPTED);
+
+                }
             } else {
                 $this->response('Unauthorized request',\Restserver\Libraries\REST_Controller::HTTP_UNAUTHORIZED);
             }
         } else {
-            //significa que nao tem cart items
-            $this->response(array(),\Restserver\Libraries\REST_Controller::HTTP_OK);
+            //no cart items
+            $this->response(array('cart'=> array()),\Restserver\Libraries\REST_Controller::HTTP_OK);
         }
 
     }

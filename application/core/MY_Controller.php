@@ -25,6 +25,7 @@ class MY_Controller extends CI_Controller
         if(isset($session_data)) {
             $this->data['logged_in'] = "1";
             $this->data['user_name'] = $session_data['name'];
+            $this->data['user_id'] = $session_data['id'];
             $this->data['api_key'] = $session_data['api_key'];
         } else {
             $this->data['logged_in'] = "0";
@@ -66,14 +67,14 @@ class MY_Controller extends CI_Controller
             $client = new GuzzleHttp\Client();
             //$this->tools->_debug($session_data);exit;
             try {
-                $session_cart = $client->request('GET', 'http://localhost/challenge/api/Cart/' . $session_data['id'] . '/' . $session_data['api_key'], [
+                $session_cart = $client->request('GET', 'http://localhost/challenge/api/Cart/' . $session_data['id'] . '/' . $session_data['api_key'] . '/' , [
                     'auth' => ['admin', '1234']
                 ]);
             }  catch (GuzzleHttp\Exception\ServerException $e) {
                 echo $e->getMessage();
             }
 
-            $this->data['cart'] = json_decode($session_cart->getBody()->getContents(), true);
+            $this->data['cart'] = json_decode($session_cart->getBody()->getContents(), true)['cart'];
 
             //para evitar o bug de nao existir session
             $_SESSION['cart'] = $this->data['cart'];

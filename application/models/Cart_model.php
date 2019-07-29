@@ -35,6 +35,17 @@ class Cart_model extends CI_Model
         return false;
     }
 
+    public function getCartTotalPrice($user_id)
+    {
+        //get total price of cart and number of items
+        $sql = "SELECT SUM(products.price * cart_items.quantity) as 'total' FROM cart INNER JOIN cart_items ON cart_items.user_id = cart.user_id INNER JOIN products ON products.id = cart_items.product_id AND cart.user_id = ?";
+        $query = $this->db->query($sql, array($user_id));
+
+        return $query->result_array();
+
+
+    }
+
     public function cartItems($user_id)
     {
         $sql = "SELECT * FROM cart_items WHERE user_id = ?;";

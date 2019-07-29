@@ -1,3 +1,8 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+?>
+
+
 <a id="btnEmpty" href="<?php echo site_url('cart/empty_cart') ?>">
     <button type="button" class="btn btn-danger">Empty Cart</button>
 </a>
@@ -13,7 +18,7 @@
     </tr>
     </thead>
 
-    <?php if (isset($cart) ) : ?>
+    <?php if (isset($cart)) : ?>
 
         <tbody>
         <?php $i = 1; ?>
@@ -61,9 +66,29 @@
             <button type="button" class="btn btn-primary">Login first</button>
         </a>
     <?php else: ?>
-        <a href="<?php echo site_url('order') ?>">
-            <button type="button" class="btn btn-primary">Order</button>
-        </a>
+        <?php if (count($cart) > 0) : ?>
+            <div class="row">
+                <div class="col-md-3">
+
+                </div>
+                <div class="col-md-3">
+
+                </div>
+                <div class="col-md-3">
+
+                </div>
+                <div class="col-md-3">
+                    <?php echo form_open(site_url('Order'), array('method' => 'POST', 'id' => 'form_process_order')); ?>
+                    <label for="voucher">Discount voucher (optional)</label>
+                    <input type="text" name="voucher" class="form-control text-right" id="voucher">
+
+                    <br>
+
+                    <button type="submit" class="btn btn-primary">Order</button>
+                    <?php echo form_close(); ?>
+                </div>
+            </div>
+        <?php endif; ?>
     <?php endif; ?>
 </div>
 

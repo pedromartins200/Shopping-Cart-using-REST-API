@@ -9,14 +9,21 @@ class Vouchers_model extends CI_Model
         parent::__construct();
     }
 
-    public function getVoucher($voucher_key)
+    public function voucherCheck($voucher_key)
     {
-        $query = "SELECT * FROM vouchers WHERE voucher_key = ?;";
-        $q = $this->db->query($query);
+        $query = "SELECT * FROM vouchers WHERE voucher_key = ? OR id = ?;";
+        $q = $this->db->query($query,array($voucher_key, $voucher_key));
         if ($q->num_rows() > 0) {
             return true;
         }
         return false;
+    }
+
+    public function getVoucher($voucher_key)
+    {
+        $query = "SELECT * FROM vouchers WHERE voucher_key = ? OR id = ?;";
+        $q = $this->db->query($query,array($voucher_key, $voucher_key));
+        return $q->result_array();
     }
 
 

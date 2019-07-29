@@ -47,13 +47,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                    <h5 class="nav-link text-white">Your api key: <?php echo $api_key; ?></h5>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= site_url('Auth/register') ?>">Welcome <?php echo $user_name; ?></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= site_url('Auth/logout') ?>">Logout</a>
+                    <a class="nav-link" href="<?= site_url('My_orders') ?>"><?php echo $user_name; ?>'s orders</a>
                 </li>
                 <li class="nav-item" onclick="showCartModal();" id="myBtn" style="cursor:pointer">
                     <i class="fa badge" style="font-size:24px" value="<?= $total_cart_quantity; ?>">&#xf07a;</i><?= $total_price; ?>.00€
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= site_url('Auth/logout') ?>">Logout</a>
                 </li>
             <?php endif; ?>
         </ul>

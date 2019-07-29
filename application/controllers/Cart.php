@@ -54,9 +54,8 @@ class Cart extends MY_Controller
                     'cat_name' => $productByCode[0]["categories.name"], 'quantity' => $post['quantity'], 'price' => $productByCode[0]["price"], 'image' => $productByCode[0]["image"]));
 
 
-                $session_cart = $_SESSION['cart'];
-
                 if (!empty($_SESSION['cart'])) {
+                    $session_cart = $_SESSION['cart'];
                     if (in_array($productByCode[0]["products.id"], array_keys($session_cart)) && $this->check($productByCode[0]["products.id"], $session_cart)) {
                         foreach ($session_cart as $k => $v) {
                             if ($productByCode[0]["products.id"] == $k) {
@@ -99,8 +98,6 @@ class Cart extends MY_Controller
             });
 
             $_SESSION['cart'] = $session_cart;
-
-            $this->updateDatabaseCart();
 
         }
         redirect('/home');
