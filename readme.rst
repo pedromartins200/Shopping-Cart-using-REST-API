@@ -89,8 +89,7 @@ There maybe plenty of bugs. This was purely done for demonstration purposes.
 
     1. POST - Create an order with the current cart content for this user.
        If voucher key is supplied and is a valid key, price will have discount.
-        (user_id, api_key, voucher_key (optional), id of the fiscal invoice, shipping address)
-        Returns: id of the created order
+        (user_id, api_key, voucher_key (optional), customer_fiscal_id, shipping_address)        Returns: id of the created order
 
     2. GET - Get all orders of this user. If a order id is supply obtain the order items.
 
