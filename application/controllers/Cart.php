@@ -10,7 +10,7 @@ class Cart extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-    }
+    }   
 
 
     public function cart_item_insert()
