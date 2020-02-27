@@ -265,7 +265,7 @@ class tools
         $str = strtolower(str_replace('&', '', $str));
         $str = strtolower(str_replace('--', '-', $str));
         $str = strtolower(str_replace('---', '-', $str));
-        $str = str_replace('/', '-', $this->stripAccents($str, true));
+        $str = str_replace('/', '-', $this->stripAccents($str, true)); 
         return $str;
     }
 
